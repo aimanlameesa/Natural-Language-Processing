@@ -4,7 +4,7 @@
 
 | Aim | Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation to facilitate impression generation by extracting critical information appropriately.| 
 | ------- | --- | 
-| Background | 301 | 
+| Background | A radiology report contains an impression section which is a summary of the observations from the finding section. It is very important for the radiologists to convey the impression section properly to the physicians. Since the process of summarizing is time-consuming and prone to error for inexperienced radiologists at the same time, automatic generation of impression has attracted substantial attention lately. Though recent studies had used a separate encoder to incorporate extra knowledge, it had not been effective enough. Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation. | 
 | ---------- | --- | 
 | Datasets | They experimented on two datasets: OPENI (Demner-Fushman et al., 2016) and MIMIC-CXR (Johnson et al., 2019), whereas the former dataset contains 3268 reports and the latter one is a larger dataset with 124577 reports. | 
 | ------- | --- | 
