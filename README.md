@@ -2,7 +2,7 @@
 
 ## Graph Enhanced Contrastive Learning for Radiology Findings Summarization
 
-| Proposal | Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation to facilitate impression generation by extracting critical information (i.e., key words and their relations) appropriately. | 
+| Proposal | Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation to facilitate impression generation by extracting critical information (i.e., key words and their relations) appropriately.| 
 | ------- | --- | 
 | Objectives | 301 | 
 | ------- | --- | 
