@@ -1,4 +1,4 @@
-# NLP Project
+# NLP Project Study
 
 ## Graph Enhanced Contrastive Learning for Radiology Findings Summarization
 
