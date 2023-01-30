@@ -2,15 +2,15 @@
 
 ## Graph Enhanced Contrastive Learning for Radiology Findings Summarization
 
-| Proposal | Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation to facilitate impression generation by extracting critical information (i.e., key words and their relations) appropriately.| 
+| Aim | Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation to facilitate impression generation by extracting critical information appropriately.| 
 | ------- | --- | 
-| Objectives | 301 | 
+| Background | 301 | 
 | ------- | --- | 
 | Contributions | 
 | ------- | --- |
-| Datasets | 301 | 
+| Datasets | They experimented on two datasets: OPENI (Demner-Fushman et al., 2016) and MIMIC-CXR (Johnson et al., 2019), whereas the former dataset contains 3268 reports and the latter one is a larger dataset with 124577 reports. | 
 | ------- | --- | 
-| Methods | 301 | 
+| Methods | They constructed a word graph for each input findings through the automatically extracted entities and dependency tree, with its embeddings from a text encoder. Then they modeled the relation information among key words through a graph encoder (e.g., graph neural networks (GNNs)). Finally, they introduced contrastive learning to map positive samples (constructed by masking non-key words) closer and push apart negative ones (constructed by masking key words) to emphasize the key words in the findings. | 
 | ------- | --- | 
 | Results| 301 | 
 | ------- | --- |
