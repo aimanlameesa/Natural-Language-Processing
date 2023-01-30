@@ -2,9 +2,22 @@
 
 ## Graph Enhanced Contrastive Learning for Radiology Findings Summarization
 
-| Attempt | #1  | #2  |
-| ------- | --- | --- |
-| Seconds | 301 | 283 |
+| Proposal | #1  | 
+| ------- | --- | 
+| Objectives | 301 | 
+| ------- | --- | 
+| Contributions | 
+| ------- | --- |
+| Datasets | 301 | 
+| ------- | --- | 
+| Methods | 301 | 
+| ------- | --- | 
+| Results| 301 | 
+| ------- | --- |
+| Limitations | 301 | 
+| ------- | --- | 
+| Future Work | 301 | 
+
 
 A radiology report contains an impression section which is a summary of the observations from the finding section. It is very important for the radiologists to convey the impression section properly to the physicians. Since the process of summarizing is time-consuming and prone to error for inexperienced radiologists at the same time, automatic generation of impression has attracted substantial attention lately. Though recent studies had used a separate encoder to incorporate extra knowledge, it had not been effective enough. Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to address the limitation. To do this, they used a text encoder to encode each input and constructed a graph using its entities and dependency tree. Then, they deployed a graph encoder to model relation information in the constructed graph. Lastly, they introduced contrastive learning to map positive samples closer and push apart negative ones in order to emphasize the key words in the findings.
 
