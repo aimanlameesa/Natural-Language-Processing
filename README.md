@@ -1,4 +1,4 @@
-# NLP Project Study
+# NLP Paper Readings
 
 ## Graph Enhanced Contrastive Learning for Radiology Findings Summarization
 
@@ -13,3 +13,15 @@ Paper link: https://arxiv.org/pdf/2204.00203.pdf
 | Limitations | While comparing the proposed model against reference impressions, it could obtain good results on key, accuracy, and completeness but it is not preferred for readability since the metric had around 10% gap. The main reason could be, many removed words in positive examples were used to keep sequence fluently, and the model showed a tendency to identify them as secondary information.|  
 | Future Work | N/A | 
 
+## Discriminative Marginalized Probabilistic Neural Method for Multi-Document Summarization of Medical Literature
+
+Paper link: https://aclanthology.org/2022.acl-long.15.pdf
+
+| Aim | | 
+| ------- | --- | 
+| Background | | 
+| Datasets |  | 
+| Methods |  |  
+| Results and Findings|  | 
+| Limitations | |  
+| Future Work | | 
