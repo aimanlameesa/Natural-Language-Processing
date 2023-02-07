@@ -1,38 +1,12 @@
-## GloVe: Global Vectors for Word Representation
+## Graph Enhanced Contrastive Learning for Radiology Findings Summarization
 
+Paper link: https://arxiv.org/pdf/2204.00203.pdf
 
-| nearest neighbors of <br/> <em>frog</em> | Litoria             |  Leptodactylidae | Rana | Eleutherodactylus |
-| --- | ------------------------------- | ------------------- | ---------------- | ------------------- |
-| Pictures | <img src="https://nlp.stanford.edu/projects/glove/images/litoria.jpg"></img> | <img src="https://nlp.stanford.edu/projects/glove/images/leptodactylidae.jpg"></img> | <img src="https://nlp.stanford.edu/projects/glove/images/rana.jpg"></img> | <img src="https://nlp.stanford.edu/projects/glove/images/eleutherodactylus.jpg"></img> |
-
-| Comparisons | man -> woman             |  city -> zip | comparative -> superlative |
-| --- | ------------------------|-------------------------|-------------------------|
-| GloVe Geometry | <img src="https://nlp.stanford.edu/projects/glove/images/man_woman_small.jpg"></img>  | <img src="https://nlp.stanford.edu/projects/glove/images/city_zip_small.jpg"></img> | <img src="https://nlp.stanford.edu/projects/glove/images/comparative_superlative_small.jpg"></img> |
-
-We provide an implementation of the GloVe model for learning word representations, and describe how to download web-dataset vectors or train your own. See the [project page](https://nlp.stanford.edu/projects/glove/) or the [paper](https://nlp.stanford.edu/pubs/glove.pdf) for more information on glove vectors.
-
-## Download pre-trained word vectors
-The links below contain word vectors obtained from the respective corpora. If you want word vectors trained on massive web datasets, you need only download one of these text files! Pre-trained word vectors are made available under the <a href="https://opendatacommons.org/licenses/pddl/">Public Domain Dedication and License</a>.
-<div class="entry">
-<ul style="padding-left:0px; margin-top:0px; margin-bottom:0px">
-  <li> Common Crawl (42B tokens, 1.9M vocab, uncased, 300d vectors, 1.75 GB download): <a href="https://huggingface.co/stanfordnlp/glove/resolve/main/glove.42B.300d.zip">glove.42B.300d.zip</a> [<a href="https://nlp.stanford.edu/data/wordvecs/glove.42B.300d.zip">mirror</a>] </li>
-  <li> Common Crawl (840B tokens, 2.2M vocab, cased, 300d vectors, 2.03 GB download): <a href="https://huggingface.co/stanfordnlp/glove/resolve/main/glove.840B.300d.zip">glove.840B.300d.zip</a> [<a href="https://nlp.stanford.edu/data/wordvecs/glove.840B.300d.zip">mirror</a>] </li>
-  <li> Wikipedia 2014 + Gigaword 5 (6B tokens, 400K vocab, uncased, 300d vectors, 822 MB download): <a href="https://huggingface.co/stanfordnlp/glove/resolve/main/glove.6B.zip">glove.6B.zip</a> [<a href="https://nlp.stanford.edu/data/wordvecs/glove.6B.zip">mirror</a>] </li>
-  <li> Twitter (2B tweets, 27B tokens, 1.2M vocab, uncased, 200d vectors, 1.42 GB download): <a href="https://huggingface.co/stanfordnlp/glove/resolve/main/glove.twitter.27B.zip">glove.twitter.27B.zip</a> [<a href="https://nlp.stanford.edu/data/wordvecs/glove.twitter.27B.zip">mirror</a>] </li>
-</ul>
-</div>
-
-## Train word vectors on a new corpus
-
-<img src="https://travis-ci.org/stanfordnlp/GloVe.svg?branch=master"></img>
-
-If the web datasets above don't match the semantics of your end use case, you can train word vectors on your own corpus.
-
-    $ git clone https://github.com/stanfordnlp/glove
-    $ cd glove && make
-    $ ./demo.sh
-
-The demo.sh script downloads a small corpus, consisting of the first 100M characters of Wikipedia. It collects unigram counts, constructs and shuffles cooccurrence data, and trains a simple version of the GloVe model. It also runs a word analogy evaluation script in python to verify word vector quality. More details about training on your own corpus can be found by reading [demo.sh](https://github.com/stanfordnlp/GloVe/blob/master/demo.sh) or the [src/README.md](https://github.com/stanfordnlp/GloVe/tree/master/src)
-
-### License
-All work contained in this package is licensed under the Apache License, Version 2.0. See the include LICENSE file.
+| Aim | Hu et al.proposed an integrated framework to exploit extra knowledge and the original findings simultaneously to facilitate impression generation by extracting critical information appropriately.| 
+| ------- | --- | 
+| Background | A radiology report contains an impression section which is a summary of the most prominent observations from the finding section. It is very important for the radiologists to convey the impression section properly to the physicians. Since the process of summarizing is time-consuming and prone to error for inexperienced radiologists at the same time, automatic generation of impression had attracted substantial attention for research. Though existing studies had used a separate encoder to incorporate extra knowledge, it had not been effective enough. That is why, Hu et al. proposed an integrated framework to address this limitation in this paper. | 
+| Datasets | They experimented on two datasets: OPENI (Demner-Fushman et al., 2016) and MIMIC-CXR (Johnson et al., 2019), whereas the first dataset contains 3268 reports and the second one is a larger dataset with 124577 reports. | 
+| Methods | They constructed a word graph for each input findings through the automatically extracted entities and dependency tree, and used the embeddings from a text encoder. Then they modeled the relation information among key words using a graph encoder. Finally, they introduced contrastive learning to map positive samples closer and push apart negative ones to emphasize the key words in the findings. |  
+| Results and Findings| Effect of Graph and Contrastive Learning (CL) <br> 1. Both BASE+GRAPH and BASE+CL could achieve better results than BASE, indicating that graph and contrastive learning can improve impression generation respectively <br> 2. BASE+GRAPH+CL outperformed all baselines with significant improvements on two datasets, confirming the effectiveness of the proposed method <br> 3. When comparing the two datasets, the performances of the proposed model on OpenI were more prominent than the MIMIC-CXR, maybe due to the smaller size and a shorter averaged word-based length of OpenI dataset <br> 4. For the FC metric on the MIMIC-CXR dataset, a higher F1 score indicated that the complete model could generate more accurate impressions <br> Comparison with Previous Studies <br> 1. The model achieved better performance than ONTOLOGYABS model <br> 2. It outperformed all existing models in terms of F1 scores <br> 3. It could achieve better performance through more straightforward method compared to complicated models <br> Human Evaluation <br> 1. Compared to to BASE, the model outperformed it on four metrics, where 16% key, 25% readability, 18% accuracy and 8% completeness of impressions from the model obtained higher quality than BASE <br> 2. Compared against reference impressions, the model was able to obtain 86%, 78%, and 92% similar results on key, accuracy and completeness as the radiologists, while it was less preferred for readability with a 10% gap <br> Findings Length <br> 1. The performance of BASE and the proposed model decreased as the findings length became long <br> 2. The model outperformed BASE in all the groups, regardless of the findings length <br> 3. A grey line with a downward trend was observed indicating that the model might gain better improvements over BASE on shorter findings than that on longer ones | 
+| Limitations | While comparing the proposed model against reference impressions, it could obtain good results on key, accuracy, and completeness but it is not preferred for readability since the metric had around 10% gap. The main reason could be, many removed words in positive examples were used to keep sequence fluently, and the model showed a tendency to identify them as secondary information.|  
+| Future Work | N/A | 
