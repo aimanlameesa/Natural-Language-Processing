@@ -6,11 +6,11 @@ For this task, we used spacy to extract the education and skills from the docume
 
 A few screenshots from the web application are attached below:
 
-# Homepage of the Resume Parser
+#### Homepage of the Resume Parser
 ![Home Page](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/homepage.png)
 
-# Uploading Resume
+#### Uploading Resume
 ![Uploading Resume ](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/upload.png)
 
-# Education and Skills Extracted from Parsed Resume
+#### Education and Skills Extracted from Parsed Resume
 ![Result Page after parsing Resume](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/parsed_resume.png)
