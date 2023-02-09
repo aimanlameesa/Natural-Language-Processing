@@ -1,0 +1,47 @@
+h1 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+#homepage-header {
+    color: black;
+    padding: 15px 0;
+    border-radius: 20px;
+}
+
+#homepage-intro {
+    padding: 20px;
+    text-align: center;
+}
+
+#homepage-form {
+    padding: 50px;
+    text-align: center;
+}
+
+td,
+th {
+    border: 2px solid #708090;
+    text-align: left;
+    padding: 8px;
+}
+table {
+    margin: 10px 0;
+}
+
+table div {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 7px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.education-background {
+    background-color: #E6E6FA;
+}
+
+.skill-background {
+    background-color: #E6E6FA;
+}
