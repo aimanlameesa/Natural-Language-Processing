@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Result</title>
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Parsed Resume</h1>
+</div>
+
+<a href="{{ url_for('index') }}" class="button btn btn-primary">Back</a>
+
+<table>
+    <tr>
+        <th>Education</th>
+        <td>
+            {% for edu in education %}
+            <div class="education-background">{{ edu }}</div>
+            {% endfor %}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Skills</th>
+        <td>
+            {% for skill in skills %}
+            <div class="skill-background">{{ skill }}</div>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+
+{% endblock %}
