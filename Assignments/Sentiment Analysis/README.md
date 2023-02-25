@@ -6,11 +6,17 @@ For this task, we defined the instances of Reddit using praw. Then we created th
 
 A few screenshots from the web application are attached below:
 
-### Homepage of the Resume Parser
-![Home Page](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/homepage.png)
+### Homepage of the Sentiment Analyzer
+![Home Page](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Sentiment%20Analysis/images/homepage.png)
 
-### Uploading Resume
-![Uploading Resume ](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/upload.png)
+### Entering a Product Name
+![Entering Product Name](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Sentiment%20Analysis/images/input.png)
 
-### Education and Skills Extracted from Parsed Resume
-![Result Page after parsing Resume](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/parsed_resume.png)
+### Obtaining Reddit Posts 
+![Obtaining Reddit Posts](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Sentiment%20Analysis/images/posts.png)
+
+### Analysis of Positive and Negative Posts
+![Analysis of Positive and Negative Posts](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Sentiment%20Analysis/images/counting.png)
+
+### Top 5 Positive and Negative Words
+![Top 5 Positive and Negative Words](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Sentiment%20Analysis/images/topwords.png)
