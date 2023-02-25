@@ -1,30 +1,16 @@
-# review_product_web
+## Sentiment Analyzer
 
-## How to
+We used Flask to create a web-based sentiment analyzer that can scrap reddit data related to a product when we enter the product name. The website also shows the count of positive and negative sentiments for that product and also the top 5 positive and negative words inside those scrapped posts. For this application, one has to simply input a product name to check the sentiments of a product.
 
-1. To scrap twitter post by keyword, I used twint because i can't get Twitter API --> install twint https://github.com/twintproject/twint/wiki/Setup 
-    * if you can't install maybe upgrade pip or install visual C++ can fix it https://visualstudio.microsoft.com/visual-cpp-build-tools/
-    * 
-     ![image](https://user-images.githubusercontent.com/78832408/219311056-8c6537f6-9b7c-461f-b4f4-e360313ff5e4.png)
+For this task, we defined the instances of Reddit using praw. Then we created the necassary frontend using html and css to display the process in a web application. We used "requirements.txt" file which contains all the necessary libraries, created "app.py" to apply Flask and pass the necessary functions in the application.
 
-2. Train model, I used bi-LSTM train with SST2 dataset 
+A few screenshots from the web application are attached below:
 
+### Homepage of the Resume Parser
+![Home Page](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/homepage.png)
 
+### Uploading Resume
+![Uploading Resume ](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/upload.png)
 
----
-## Review
-
-1. input keyword
-
-![image](https://user-images.githubusercontent.com/78832408/219096665-1b0706af-45c4-467d-ac3c-3d6514200733.png)
-
-2. show comparison and top word 
-
-   * I'm not train much and because this is binary classification, model may bias on negative, next time we may try over-sampling and hyperparameter tuning for improve model  
-  
-![image](https://user-images.githubusercontent.com/78832408/219310666-18d6977d-aff3-485a-8fa5-2e350d84fab2.png)
-
-*bitcoin
-
-![image](https://user-images.githubusercontent.com/78832408/219315763-2a4900c2-3068-4b10-8719-ae343cf34e05.png)
-
+### Education and Skills Extracted from Parsed Resume
+![Result Page after parsing Resume](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Resume%20Parser/images/parsed_resume.png)
