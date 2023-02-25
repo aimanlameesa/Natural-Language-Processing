@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Checking Sentiments of Product</title>
+{% endblock %}
+
+{% block content %}
+<p id="reddit-icon"><i class="bi bi-reddit"></i></p>
+
+<div width: 100px>
+    <h1>Sentiment Analyzer based on Reddit Posts</h1>
+</div>
+
+<br>
+
+<div id="subreddit-form" width: 1000px, height: 1000px, style="background-color: black;"></div>
+    <form action="/searchSubreddit" method="POST" enctype="multipart/form-data" style="background-color: black;">
+        <label for="subreddit" class="form-label" style="color: white;">Enter Your Desired Product Name:</label>
+        <input type="text" class="form-control" name="Subreddit" id="subreddit">
+        <br>
+        <button type="submit" class="btn btn-dark">Check Sentiments</button>
+    </form>
+</div>
+{% endblock %}

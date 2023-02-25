@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Sentiments for Your Desired Product</title>
+{% endblock %}
+
+{% block content %}
+<div id="result-header">
+    <a href="{{ url_for('index') }}" class="return-button button btn btn-primary">Back to HomePage</a>
+    
+    <br>
+ 
+    <h1>Sentiments for Your Desired Product</h1>
+</div>
+
+<br> 
+
+<h3>Reddit Posts</h3>
+
+<table style="background-color: black;">
+    <tr>
+        <th style="color: white;">Title</th>
+        <th style="color: white;">Upvotes</th>
+        <th style="color: white;">Sentiment</th>
+    </tr>
+    {% for idx in range(length) %}
+    <tr>
+        <td style="color: white;">{{ titles[idx] }}</td>
+        <td style="color: white;">{{ upvotes[idx] }}</td>
+        {% if sentiment[idx] == 1 %}
+        <td class="postive-sentiment" style="color: white;">
+            {{ "positive" }}
+        </td>
+        {% else %}
+        <td class="negative-sentiment" style="color: white;">
+            {{ "negative" }}
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<h3>Analysis of Positive and Negative Posts</h3>
+<img class="plot" src="data:image/png;base64, {{ sentiment_plot }}">
+
+<br>
+
+<h3 class="top-words-header">Top 5 Positive Words</h3>
+<div id="positive-words">
+    {% for pos_word in top_five_pos_word %}
+        <div style="color: navy;">{{ pos_word }}</div>
+    {% endfor %}
+</div>
+
+<br>
+
+<h3 class="top-words-header">Top 5 Negative Words</h3>
+<div id="negative-words">
+    {% for neg_word in top_five_neg_word %}
+        <div style="color: red;">{{ neg_word }}</div>
+    {% endfor %}
+</div>
+{% endblock %}
