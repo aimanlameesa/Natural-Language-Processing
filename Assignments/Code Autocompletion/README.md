@@ -1,30 +1,16 @@
-# review_product_web
+## Code Autocompletion
 
-## How to
+We used Flask to create a web-based automatic code generator given a few words of code. For this application, one has to input a few words of code from the beginning and then the program will automatically predict the latter words of code given a fixed sequence length.
 
-1. To scrap twitter post by keyword, I used twint because i can't get Twitter API --> install twint https://github.com/twintproject/twint/wiki/Setup 
-    * if you can't install maybe upgrade pip or install visual C++ can fix it https://visualstudio.microsoft.com/visual-cpp-build-tools/
-    * 
-     ![image](https://user-images.githubusercontent.com/78832408/219311056-8c6537f6-9b7c-461f-b4f4-e360313ff5e4.png)
+For this Language Modeling task, we used a LSTM model to predict the next words in a sequence. Then we created the necassary frontend using html to display the process in a web application. We used "requirements.txt" file which contains all the necessary libraries, created "app.py" to apply Flask and pass the necessary function in the application.
 
-2. Train model, I used bi-LSTM train with SST2 dataset 
+A few screenshots from the web application are attached below:
 
+### Homepage of the Code Generator
+![Home Page](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Code%20Autocompletion/images/homepage.png)
 
+### Entering a Few Words of Codes
+![Entering Few Words Codes](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Code%20Autocompletion/images/input.png)
 
----
-## Review
-
-1. input keyword
-
-![image](https://user-images.githubusercontent.com/78832408/219096665-1b0706af-45c4-467d-ac3c-3d6514200733.png)
-
-2. show comparison and top word 
-
-   * I'm not train much and because this is binary classification, model may bias on negative, next time we may try over-sampling and hyperparameter tuning for improve model  
-  
-![image](https://user-images.githubusercontent.com/78832408/219310666-18d6977d-aff3-485a-8fa5-2e350d84fab2.png)
-
-*bitcoin
-
-![image](https://user-images.githubusercontent.com/78832408/219315763-2a4900c2-3068-4b10-8719-ae343cf34e05.png)
-
+### Prediction Based on Given Input Codes
+![Prediction Based Given Input Codes](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Code%20Autocompletion/images/output.png)
