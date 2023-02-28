@@ -1,6 +1,6 @@
-## https://aclanthology.org/2021.findings-acl.30.pdf
+## Entity-Aware Abstractive Multi-Document Summarization
 
-Paper link: 
+Paper link: https://aclanthology.org/2021.findings-acl.30.pdf
 
 | Aim | Zhou et al. presented an entity-aware model for abstractive multi-document summarization using a novel decoding mechanism that aims to deal with saliency and redundancy issues explicitly. | 
 | ------- | --- | 
