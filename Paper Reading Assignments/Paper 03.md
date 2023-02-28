@@ -4,18 +4,7 @@ Paper link:
 
 | Aim | Zhou et al. presented an entity-aware model for abstractive multi-document summarization using a novel decoding mechanism that aims to deal with saliency and redundancy issues explicitly. | 
 | ------- | --- | 
-| Background | Previous research efforts had highlighted the importance of modeling cross-document relations in multi-document summarization. Those relations were also proved to be useful in identifying the salient and redundant information from long documents, and can thus guide
-the summary generation process. However, while
-effective empirically, such approaches do not focus on explicitly modeling the underlying semantic
-information across documents.
-Entities and their mentions convey rich semantic
-information, and can be significant in summarization, especially when a specific entity is the topic
-under discussion for a set of documents. As shown
-in Figure 1, entity mentions frequently appear in
-the input article, and are playing unique roles that
-contribute towards the coherence and conciseness
-of the text. We believe that entities can be regarded
- | 
+| Background | Previous research efforts had highlighted the importance of modeling cross-document relations in multi-document summarization. Those relations were also proved to be effective in identifying the salient and redundant information, which can further help us to process summary generation from long documents. However, previous research in this domain did not focus on modeling the underlying semantic information across multiple documents explicitly. Since entity mentions convey rich semantic and contribute towards the coherence and conciseness of the text, they can be very significant in summary generation process. Considering entities as the indicator of saliency and reducing redundancy, Zhou et al. proposed an entity-aware abstractive multi-document summarization model to emphasize the relations of the entities across multiple documents. | 
 | Datasets |  | 
 | Methods |  |  
 | Results and Findings|  | 
