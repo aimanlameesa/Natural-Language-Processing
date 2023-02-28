@@ -8,6 +8,6 @@ Paper link:
 | Datasets |  | 
 | Methods |  |  
 | Results and Findings|  | 
-| Limitations |  |  
-| Future Work |  | 
+| Limitations | The limitation of this research is that the model heavily relies on the quality of entity annotations and may not generalize well to new domains with limited annotated data. |  
+| Future Work | The future research direction includes exploring other approaches, i.e, reinforcement learning based methods to further improve the summary generation process for multiple documents. and also applying the proposed method to different tasks such as multi-document question answering.
 
