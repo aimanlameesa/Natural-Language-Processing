@@ -76,11 +76,11 @@ def translation(source, variants, save_path, device):
     SRC_PAD_IDX = PAD_IDX
 
     attn = Attention(hid_dim, variants=variants)
-    # enc  = Encoder(input_dim,  emb_dim,  hid_dim, dropout)
-    # dec  = Decoder(output_dim, emb_dim,  hid_dim, dropout, attn)
+    enc  = Encoder(input_dim,  emb_dim,  hid_dim, dropout)
+    dec  = Decoder(output_dim, emb_dim,  hid_dim, dropout, attn)
 
-    enc  = Encoder(1139,  emb_dim,  hid_dim, dropout)
-    dec  = Decoder(947, emb_dim,  hid_dim, dropout, attn)
+    # enc  = Encoder(1139,  emb_dim,  hid_dim, dropout)
+    # dec  = Decoder(947, emb_dim,  hid_dim, dropout, attn)
 
     model = Seq2SeqPackedAttention(enc, dec, SRC_PAD_IDX, device).to(device)
     model.apply(initialize_weights)
