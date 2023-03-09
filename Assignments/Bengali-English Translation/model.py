@@ -14,30 +14,30 @@ class Encoder(nn.Module):
         
     def forward(self, src, src_len):
         
-        #src: [src len, batch size]
-        #src len: [batch size]
+        # src: [src len, batch size]
+        # src len: [batch size]
         
         embedded = self.dropout(self.embedding(src))
         
         packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, 
                             src_len.to('cpu'), enforce_sorted=False)
         
-        #packed_outputs contain all hidden states including padding guy
-        #hidden contains the last hidden states of the non-padded guys
+        # packed_outputs contain all hidden states including padding guy
+        # hidden contains the last hidden states of the non-padded guys
         packed_outputs, hidden = self.rnn(packed_embedded)
-        #hidden: [n layers * num directions, batch size, hid dim]
+        # hidden: [n layers * num directions, batch size, hid dim]
         
-        #convert packed_outputs to the guy that does not contain hidden states for padding
+        # converting packed_outputs to the guy that does not contain hidden states for padding
         outputs, _ = nn.utils.rnn.pad_packed_sequence(packed_outputs)
-        #outputs: [src len, batch size, hid dim * num directions]
+        # outputs: [src len, batch size, hid dim * num directions]
         
-        #take the last hidden states from backward and forward
-        #hidden: (f, b, f, b)
+        # taking the last hidden states from backward and forward
+        # hidden: (f, b, f, b)
         forward  = hidden[-2, :, :]  #[batch size, hid dim]
         backward = hidden[-1, :, :]  #[batch size, hid dim]
         
         hidden = torch.tanh(self.fc(torch.cat((forward, backward), dim = 1))) 
-        #hidden: [batch size, hid dim]
+        # hidden: [batch size, hid dim]
         
         return outputs, hidden
 
@@ -51,46 +51,46 @@ class Attention(nn.Module):
                 
     def forward(self, hidden, encoder_outputs, mask):
         
-        #hidden = [batch size, hid dim]
-        #encoder_outputs = [src len, batch size, hid dim * 2]
+        # hidden = [batch size, hid dim]
+        # encoder_outputs = [src len, batch size, hid dim * 2]
         
         batch_size = encoder_outputs.shape[1]
         src_len = encoder_outputs.shape[0]
 
         encoder_outputs = encoder_outputs.permute(1, 0, 2)
-        #encoder_outputs = [batch size, src len, hid dim * 2]
+        # encoder_outputs = [batch size, src len, hid dim * 2]
 
-        if self.variants == 'additive': #work
-            #repeat decoder hidden state src_len times
+        if self.variants == 'general': 
+            # repeat decoder hidden state src_len times
             hidden = hidden.unsqueeze(1).repeat(1, src_len, 1)
-            #hidden = [batch size, src len, hid dim]
+            # hidden = [batch size, src len, hid dim]
             
             energy = torch.tanh(self.W(hidden) + self.U(encoder_outputs))
-            #energy = [batch size, src len, hid dim]
+            # energy = [batch size, src len, hid dim]
             
             attention = self.v(energy).squeeze(2)
-            #attention = [batch size, src len]
+            # attention = [batch size, src len]
             
-        elif self.variants == 'general': #work
+        elif self.variants == 'additive': 
             hidden = hidden.unsqueeze(1).repeat(1, 1, 2)
-            #hidden = [batch size, 1, hid dim*2]
-            #encoder_outputs = [batch size, hid dim * 2, src len]
+            # hidden = [batch size, 1, hid dim*2]
+            # encoder_outputs = [batch size, hid dim * 2, src len]
 
             energy = torch.bmm(hidden, encoder_outputs.transpose(1, 2))
             attention = energy.squeeze(1)
-            #attention = [batch size, src len]
+            # attention = [batch size, src len]
 
-        elif self.variants == 'multiplicative':
+        elif self.variants == 'multiplicative': 
             wh = self.W(hidden).unsqueeze(1).repeat(1, 1, 2)
-            #wh = [batch size, 1, hid dim*2]
-            #encoder_outputs = [batch size, hid dim * 2, src len]
+            # wh = [batch size, 1, hid dim*2]
+            # encoder_outputs = [batch size, hid dim * 2, src len]
 
             energy = torch.bmm(wh, encoder_outputs.transpose(1, 2))
             attention = energy.squeeze(1)
 
-        #use masked_fill_ if you want in-place
+        # using masked_fill
         attention = attention.masked_fill(mask, -1e10)
-        #attention = [batch size, src len]
+        # attention = [batch size, src len]
         return F.softmax(attention, dim = 1)
     
 class Decoder(nn.Module):
@@ -106,38 +106,38 @@ class Decoder(nn.Module):
         
     def forward(self, input, hidden, encoder_outputs, mask):
         
-        #input = [batch size]
-        #hidden = [batch size, hid dim]
-        #encoder_outputs = [src len, batch size, hid dim * 2]
-        #mask = [batch size, src len]
+        # input = [batch size]
+        # hidden = [batch size, hid dim]
+        # encoder_outputs = [src len, batch size, hid dim * 2]
+        # mask = [batch size, src len]
         
         input = input.unsqueeze(0)
-        #input = [1, batch size]
+        # input = [1, batch size]
         
         embedded = self.dropout(self.embedding(input))
-        #embedded = [1, batch size, emb dim]
+        # embedded = [1, batch size, emb dim]
         
         a = self.attention(hidden, encoder_outputs, mask)
-        #a = [batch size, src len]
+        # a = [batch size, src len]
 
         a = a.unsqueeze(1)
-        #a = [batch size, 1, src len]
+        # a = [batch size, 1, src len]
         
         encoder_outputs = encoder_outputs.permute(1, 0, 2)
-        #encoder_outputs = [batch size, src len, hid dim * 2]
+        # encoder_outputs = [batch size, src len, hid dim * 2]
         
         weighted = torch.bmm(a, encoder_outputs) #Ct
-        #weighted = [batch size, 1, hid dim * 2]
+        # weighted = [batch size, 1, hid dim * 2]
         
         weighted = weighted.permute(1, 0, 2)
-        #weighted = [1, batch size, hid dim * 2]
+        # weighted = [1, batch size, hid dim * 2]
         
         rnn_input = torch.cat((embedded, weighted), dim = 2)
-        #rnn_input = [1, batch size, (hid dim * 2) + emb dim]
+        # rnn_input = [1, batch size, (hid dim * 2) + emb dim]
         
         output, hidden = self.gru(rnn_input, hidden.unsqueeze(0))
-        #output = [seq len, batch size, dec hid dim * n directions]
-        #hidden = [1, batch size, hid dim]
+        # output = [seq len, batch size, dec hid dim * n directions]
+        # hidden = [1, batch size, hid dim]
         assert (output == hidden).all()
 
         embedded = embedded.squeeze(0)
@@ -145,7 +145,7 @@ class Decoder(nn.Module):
         weighted = weighted.squeeze(0)
         
         prediction = self.fc(torch.cat((output, weighted, embedded), dim = 1))
-        #prediction = [batch size, output dim]
+        # prediction = [batch size, output dim]
         
         return prediction, hidden.squeeze(0), a.squeeze(1)
     
@@ -159,63 +159,63 @@ class Seq2SeqPackedAttention(nn.Module):
         self.device = device
         
     def create_mask(self, src):
-        #src: [src len, batch size]
+        # src: [src len, batch size]
         
         mask = (src == self.src_pad_idx).permute(1, 0)
-        #mask: [batch size, src len]
-        #we need to permute to make the mask same shape as attention...
+        # mask: [batch size, src len]
+        # we need to permute to make the mask same shape as attention...
         return mask
 
         
     def forward(self, src, src_len, trg, teacher_forcing_ratio = 0.5):
         
-        #src: [src len, batch size]
-        #src len: [batch size]
-        #trg: [trg len, batch size]
+        # src: [src len, batch size]
+        # src len: [batch size]
+        # trg: [trg len, batch size]
         
         batch_size = src.shape[1]
         trg_len    = trg.shape[0]
         trg_vocab_size = self.decoder.output_dim #define in decoder
         
-        #because decoder decodes each step....let's create a list that gonna append the result to this guy
+        # because decoder decodes each step....let's create a list that gonna append the result to this guy
         outputs = torch.zeros(trg_len, batch_size, trg_vocab_size).to(self.device)
         
-        #because decoder decodes each step....let's memorize the attention done in each step....
+        # because decoder decodes each step....let's memorize the attention done in each step....
         attentions = torch.zeros(trg_len, batch_size, src.shape[0]).to(self.device)
         
-        #let's start!!!
-        #1. encoder
+        # let's start!!!
+        # 1. encoder
         encoder_outputs, hidden = self.encoder(src, src_len)
-        #encoder_outputs: [src len, batch size, hid dim * num directions]
-        #hidden: [batch size, hid dim]
+        # encoder_outputs: [src len, batch size, hid dim * num directions]
+        # hidden: [batch size, hid dim]
         
-        #set the first input to the decoder
+        # setting the first input to the decoder
         input_ = trg[0,:]  #basically <sos>
         
-        #create the mask for use in this step
+        # creating the mask for use in this step
         mask = self.create_mask(src)
         
-        #2. for each of trg word
+        # 2. for each of trg word
         for t in range(1, trg_len):
 
-            #3. decode (hidden is always carry forward)
+            # 3. decoder (hidden is always carry forward)
             output, hidden, attention = self.decoder(input_, hidden, encoder_outputs, mask)
-            #output:   [batch size, output_dim]
-            #hidden:   [batch size, hid_dim]
-            #attention::[batch size, src len]  ==> how each of src token is important to input_ 
+            # output:   [batch size, output_dim]
+            # hidden:   [batch size, hid_dim]
+            # attention::[batch size, src len]  ==> how each of src token is important to input_ 
             
-            #4. append the results to outputs and attentions
+            # 4. appending the results to outputs and attentions
             outputs[t] = output
             attentions[t] = attention
             
-            #5. get the result, using argmax
+            # 5. getting the result, using argmax
             top1 = output.argmax(1)  #find the maximum index of dimension 1, which is output_dim
             
-            #6. based on the teacher forcing ratio, 
+            # 6. based on the teacher forcing ratio, 
             teacher_force_or_not = random.random() < teacher_forcing_ratio
-                    #if teacher forcing, next input is the next trg
-                    #if no teacher forcing, the next input is the argmax guy...
+                    # if teacher forcing, next input is the next trg
+                    # if no teacher forcing, the next input is the argmax guy...
             input_ = trg[t] if teacher_force_or_not else top1  #autoregressive
             
-        return outputs, attentions #outputs for predicting the word, attentions to see which word is important
+        return outputs, attentions # outputs for predicting the word, attentions to see which word is important
         
