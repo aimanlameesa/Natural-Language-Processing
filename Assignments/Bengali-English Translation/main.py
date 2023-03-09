@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from wtforms.validators import DataRequired
 from testing import *
-# import TestingNMT
 import torch
 
 import torch, torchdata, torchtext
@@ -11,7 +10,7 @@ import torch.nn.functional as F
 import random, math, time
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-#make our work comparable if restarted the kernel
+# making our work comparable if restarted the kernel
 SEED = 1234
 torch.manual_seed(SEED)
 torch.backends.cudnn.deterministic = True
@@ -35,7 +34,7 @@ def machinetranslation():
     else:
         source = ' '
         predict = ' '
-    # predict = 555
+    # prediction
     data = {"source":source, "predict":predict}
     return render_template("mt.html", data = data)
 
