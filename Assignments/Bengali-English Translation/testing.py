@@ -1,6 +1,5 @@
 import torch
 import pickle
-from attacut import tokenize
 from model import *
 from torchtext.data.utils import get_tokenizer
 
@@ -12,12 +11,12 @@ token_transform = {}
 token_transform[SRC_LANGUAGE] = get_tokenizer('spacy', language='xx_ent_wiki_sm')
 token_transform[TRG_LANGUAGE] = get_tokenizer('spacy', language='en_core_web_sm')
 
-# Define special symbols and indices
+# defining special symbols and indices
 UNK_IDX, PAD_IDX, SOS_IDX, EOS_IDX = 0, 1, 2, 3
-# Make sure the tokens are in order of their indices to properly insert them in vocab
+# making sure the tokens are in order of their indices to properly insert them in vocab
 special_symbols = ['<unk>', '<pad>', '<sos>', '<eos>']
 
-# Load data (vocab and transform)
+# loading data 
 import pickle
 
 with open('vocab_transform.pickle', 'rb') as handle:
@@ -46,8 +45,8 @@ def tensor_transform(token_ids):
 # src and trg language text transforms to convert raw strings into tensors indices
 text_transform = {}
 for ln in [SRC_LANGUAGE, TRG_LANGUAGE]:
-    text_transform[ln] = sequential_transforms(token_transform[ln], #Tokenization
-                                               vocab_transform[ln], #Numericalization
+    text_transform[ln] = sequential_transforms(token_transform[ln], # Tokenization
+                                               vocab_transform[ln], # Numericalization
                                                tensor_transform) # Add BOS/EOS and create tensor
 
 def initialize_weights(m):
@@ -84,25 +83,24 @@ def translation(source, variants, save_path, device):
 
     model = Seq2SeqPackedAttention(enc, dec, SRC_PAD_IDX, device).to(device)
     model.apply(initialize_weights)
-    # print(model)
-
+    
     model.load_state_dict(torch.load(save_path, map_location=torch.device('cpu')))
     model.eval()
 
     with torch.no_grad():
         output, attentions = model(src_text, text_length, trg_text, 0) #turn off teacher forcing
-    #trg_len, batch_size, trg_output_dim
+    # trg_len, batch_size, trg_output_dim
     output = output.squeeze(1)
-    #trg_len, trg_output_dim
+    # trg_len, trg_output_dim
     output = output[1:]
-    output_max = output.argmax(1) #returns max indices
+    output_max = output.argmax(1) # returns max indices
     mapping = vocab_transform[TRG_LANGUAGE].get_itos()
 
-    predict_setence = []
+    predict_sentence = []
     for token in output_max:
         if mapping[token.item()] == '<eos>':
-            return ' '.join(predict_setence)
+            return ' '.join(predict_sentence)
         
-        predict_setence.append(mapping[token.item()])
+        predict_sentence.append(mapping[token.item()])
 
-    return ' '.join(predict_setence)
+    return ' '.join(predict_sentence)
