@@ -189,7 +189,58 @@ class Decoder(nn.Module):
         # output = [batch size, len, output dim]
             
         return output, attention
+                
+    # during inference
+    # encapsulating beam_decode or greedy_decode
+    def decode(self, src, trg, src_len, method='beam-search'):
+        
+        # src = [src len, batch size]
+        # trg = [trg len, batch size]
+        # src len = [batch size]
 
+        # encoder_outputs, hidden = self.encoder(src, src_len) 
+        # encoder_outputs = [src len, batch size, hid dim * 2]  (*2 because of bidirectional)(every hidden states)
+        # hidden = [batch size, hid dim]  #final hidden state
+       
+        hidden = hidden.unsqueeze(0)
+        # hidden = [1, batch size, hid dim]
+        
+        if method == 'beam-search':
+            return self.beam_decode(src, trg)
+        else:
+            return self.greedy_decode(trg, hidden)
+
+    def greedy_decode(self, trg, decoder_hidden, src_len):
+
+        # initializing decoder input and hidden state
+        decoder_input = torch.tensor([[self.decoder.SOS_IDX]])  # start-of-sequence token
+        decoder_hidden = self.decoder.init_hidden()
+
+        # decoding sequence        
+        decoded_words = []
+        
+        for i in range(src_len):
+          # running decoder on current input and hidden state
+          trg, decoder_hidden = self.decoder(decoder_input, decoder_hidden)
+
+          # getting most probable next word
+          topv, topi = self.decoder_output.topk(1)
+          next_word = topi.item()
+
+          # adding word to decoded sequence
+          if next_word == self.decoder.EOS_IDX:  # end-of-sequence token
+            decoded_words.append('<eos>')
+            break
+
+          else:
+            decoded_words.append(self.decoder.output_lang.index2word[next_word])
+
+          # preparing next decoder input
+          decoder_input = torch.tensor([[next_word]])
+
+          return decoded_words
+
+    
     def beam_decode(self, src_tensor, method='beam-search'):
         
         # src_tensor = [batch size, src len]
