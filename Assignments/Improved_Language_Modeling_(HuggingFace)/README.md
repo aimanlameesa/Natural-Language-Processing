@@ -13,4 +13,4 @@ A few screenshots from the web application are attached below:
 ![Entering Few Words Codes](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Improved_Language_Modeling_(HuggingFace)/images/input1.png)
 
 ### Prediction Based on Given Input 
-![Prediction Based Given Input Codes](https://github.com/aimanlameesa/Natural-Language-Processing/blob/main/Assignments/Improved_Language_Modeling_(HuggingFace)/images/output1.png)
+![Prediction Based Given Input Codes]()
